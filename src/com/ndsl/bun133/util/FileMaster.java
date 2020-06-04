@@ -19,4 +19,6 @@ public class FileMaster {
         }
         return image;
     }
+
+    public static final String RESOURCE_ROCATION="resources\\";
 }
