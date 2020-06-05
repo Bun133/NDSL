@@ -1,5 +1,7 @@
 package com.ndsl.bun133.game.map.pos;
 
+import com.ndsl.bun133.display.pos.onDisplayRect;
+
 public class Rect {
     public Point left_up;
     public Point right_down;
@@ -27,6 +29,19 @@ public class Rect {
 
     public boolean isContain(Rect rect){
         for(Point point:getPoints()){
+            if(isContain(point)) return true;
+        }
+        for(Point point:rect.getPoints()){
+            if(isContain(point)) return true;
+        }
+        return false;
+    }
+
+    public boolean isContain(onDisplayRect rect){
+        for(Point point:getPoints()){
+            if(isContain(point)) return true;
+        }
+        for(Point point:rect.getPoints()){
             if(isContain(point)) return true;
         }
         return false;

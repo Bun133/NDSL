@@ -12,6 +12,7 @@ import java.awt.*;
 public class Drawable {
     public DrawableType Drawabletype;
 
+    protected Drawable(){}
     /**
      * @param image
      */
@@ -101,11 +102,35 @@ public class Drawable {
         }
     }
 
+    public onDisplayRect getRect(){
+        switch (this.Drawabletype){
+            case IMAGE:
+                return Image_rect;
+            case LINE:
+                return new onDisplayRect(line.left_up,line.right_down);
+            case RECT:
+                return rect;
+            case RUNNABLE:
+                return new onDisplayRect(1,1,1,1);
+            default:
+                GameMain.logger.warn("[Drawable]Unmatched DrawableType");
+                return null;
+        }
+    }
+
     /**
      * @return is Need Repaint(or Draw)
      */
     boolean isNeedDraw=true;
     public boolean isNeedDraw() {
         return isNeedDraw;
+    }
+
+    private boolean isShow(Display display){
+        return new Rect(0,0,display.getWidth(),display.getHeight()).isContain(getRect());
+    }
+
+    public boolean isShowing(Display display){
+        return isShow(display);
     }
 }

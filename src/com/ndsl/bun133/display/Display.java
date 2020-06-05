@@ -7,10 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Display extends JFrame {
     public BufferStrategy bfi;
+    public long passing_time=0;
 
     public Display(String title,int x,int y,int width,int height){
         this.setTitle(title);
@@ -23,8 +25,8 @@ public class Display extends JFrame {
 
     public List<Drawable> drawableList = new ArrayList<>();
 
-    public void addDrawable(Drawable drawable){
-        drawableList.add(drawable);
+    public void addDrawable(Drawable... drawable){
+        drawableList.addAll(Arrays.asList(drawable));
     }
 
     @Override
@@ -37,8 +39,10 @@ public class Display extends JFrame {
         boolean isRepaint=false;
         for(Drawable drawable:drawableList){
             if(drawable.isNeedDraw()){
-                isRepaint=true;
-                drawable.draw(this);
+                if(drawable.isShowing(this)) {
+                    isRepaint = true;
+                    drawable.draw(this);
+                }
             }
         }
         if(isRepaint) repaint();
@@ -50,6 +54,7 @@ public class Display extends JFrame {
         if (!bfi.contentsLost()) bfi.show();
         Toolkit.getDefaultToolkit().sync();
         getGraphics().dispose();
+        passing_time++;
     }
 
     @Override

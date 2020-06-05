@@ -1,5 +1,7 @@
 package com.ndsl.bun133.display.pos;
 
+import com.ndsl.bun133.game.map.pos.Point;
+
 public class onDisplayRect {
     public onDisplayPos left_up;
     public onDisplayPos right_down;
@@ -15,4 +17,13 @@ public class onDisplayRect {
     public int getWidth(){return right_down.pos_x-left_up.pos_x;}
 
     public int getHeight(){return left_up.pos_y-right_down.pos_y;}
+
+    public Point[] getPoints(){
+        Point[] points=new Point[4];
+        points[0]=left_up.toPoint();
+        points[1]=new Point(left_up.pos_x,right_down.pos_y);
+        points[2]=new Point(right_down.pos_x,left_up.pos_y);
+        points[3]=right_down.toPoint();
+        return points;
+    }
 }

@@ -1,5 +1,7 @@
 package com.ndsl.bun133.display.pos;
 
+import com.ndsl.bun133.game.map.pos.Point;
+
 public class onDisplayPos {
     public int pos_x;
     public int pos_y;
@@ -7,4 +9,8 @@ public class onDisplayPos {
         this.pos_x=x;
         this.pos_y=y;
     }
+
+    public Point toPoint(){
+        return new Point(pos_x,pos_y);
+    };
 }
