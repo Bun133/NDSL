@@ -1,18 +1,25 @@
 package com.ndsl.bun133.display;
 
 import com.ndsl.bun133.display.drawable.Drawable;
+import com.ndsl.bun133.game.GameMain;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Display extends JFrame {
-    public Display(String title){
+    public BufferStrategy bfi;
+
+    public Display(String title,int x,int y,int width,int height){
         this.setTitle(title);
+        this.setBounds(x,y,width,height);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.createBufferStrategy(2);
+        bfi=getBufferStrategy();
     }
-
-
 
     public List<Drawable> drawableList = new ArrayList<>();
 
@@ -22,6 +29,11 @@ public class Display extends JFrame {
 
     @Override
     public void update(Graphics g) {
+        update();
+    }
+
+    public void update(){
+        GameMain.logger.low_level_debug("[Display] Update");
         boolean isRepaint=false;
         for(Drawable drawable:drawableList){
             if(drawable.isNeedDraw()){
@@ -33,7 +45,19 @@ public class Display extends JFrame {
     }
 
     @Override
-    public void repaint(long time, int x, int y, int width, int height) {
-        super.repaint(time, x, y, width, height);
+    public void repaint() {
+        GameMain.logger.low_level_debug("[Display]repaint");
+        if (!bfi.contentsLost()) bfi.show();
+        Toolkit.getDefaultToolkit().sync();
+        getGraphics().dispose();
     }
+
+    @Override
+    public Graphics getGraphics() {
+        return bfi.getDrawGraphics();
+    }
+
+//    public boolean isPreparing(){
+//
+//    }
 }

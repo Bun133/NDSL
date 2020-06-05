@@ -10,7 +10,7 @@ public class BlockDrawable extends Drawable {
     public onMapBlockPos pos;
     public Map CurrentMap;
     public BlockDrawable(Image image, onMapBlockPos pos, Map map){
-        super(image);
+        super(image,pos.getLeft_UP());
         this.pos=pos;
     }
 

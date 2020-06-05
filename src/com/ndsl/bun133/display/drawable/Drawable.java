@@ -3,6 +3,7 @@ package com.ndsl.bun133.display.drawable;
 import com.ndsl.bun133.display.Display;
 import com.ndsl.bun133.display.pos.onDisplayLine;
 import com.ndsl.bun133.display.pos.onDisplayRect;
+import com.ndsl.bun133.game.GameMain;
 import com.ndsl.bun133.game.map.pos.Point;
 import com.ndsl.bun133.game.map.pos.Rect;
 
@@ -78,6 +79,8 @@ public class Drawable {
      */
 
     public void draw(Display display){
+        GameMain.logger.low_level_debug("[DRAWABLE]onDraw");
+        isNeedDraw=false;
         switch (this.Drawabletype){
             case LINE:
                 Graphics g=display.getGraphics();
@@ -85,9 +88,9 @@ public class Drawable {
                 g.drawLine(line.left_up.pos_x,line.left_up.pos_y,line.right_down.pos_x,line.right_down.pos_y);
                 break;
             case RECT:
-                Graphics g=display.getGraphics();
-                g.setColor(rect_color);
-                g.fillRect(rect.left_up.pos_x,rect.left_up.pos_y,rect.getWidth(),rect.getHeight());
+                Graphics gg=display.getGraphics();
+                gg.setColor(rect_color);
+                gg.fillRect(rect.left_up.pos_x,rect.left_up.pos_y,rect.getWidth(),rect.getHeight());
                 break;
             case IMAGE:
                 display.getGraphics().drawImage(image,Image_rect.left_up.pos_x,Image_rect.left_up.pos_y,null);
@@ -101,7 +104,8 @@ public class Drawable {
     /**
      * @return is Need Repaint(or Draw)
      */
+    boolean isNeedDraw=true;
     public boolean isNeedDraw() {
-        return true;
+        return isNeedDraw;
     }
 }

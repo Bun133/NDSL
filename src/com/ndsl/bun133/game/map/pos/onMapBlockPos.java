@@ -1,14 +1,17 @@
 package com.ndsl.bun133.game.map.pos;
 
 import com.ndsl.bun133.game.GameMain;
+import com.ndsl.bun133.game.map.Map;
 import com.ndsl.bun133.game.map.chunk.block.Block;
 
 public class onMapBlockPos {
     public int pos_x;
     public int pos_y;
-    public onMapBlockPos(int x,int y){
+    public Map map;
+    public onMapBlockPos(int x, int y, Map map){
         this.pos_x=x;
         this.pos_y=y;
+        this.map=map;
     }
 
     public Rect getRect(){
@@ -24,6 +27,6 @@ public class onMapBlockPos {
     }
 
     public Point getCenter(){
-        return new Point(pos_x*GameMain.BLOCK_SIZE,pos_y*GameMain.BLOCK_SIZE);
+        return new Point(pos_x*GameMain.BLOCK_SIZE + map.shift_x,pos_y*GameMain.BLOCK_SIZE + map.shift_y);
     }
 }

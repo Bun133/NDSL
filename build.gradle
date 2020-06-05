@@ -25,3 +25,5 @@ sourceSets{
         resources.srcDir('resources')
     }
 }
+
+tasks.withType(Jar) {compileJava.options.encoding = 'UTF-8'}
