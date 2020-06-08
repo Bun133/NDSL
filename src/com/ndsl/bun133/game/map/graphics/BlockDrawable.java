@@ -2,6 +2,7 @@ package com.ndsl.bun133.game.map.graphics;
 
 import com.ndsl.bun133.display.Display;
 import com.ndsl.bun133.display.drawable.Drawable;
+import com.ndsl.bun133.game.GameMain;
 import com.ndsl.bun133.game.map.Map;
 import com.ndsl.bun133.game.map.chunk.block.status.BlockStatus;
 import com.ndsl.bun133.game.map.pos.onMapBlockPos;
@@ -35,5 +36,11 @@ public class BlockDrawable extends Drawable {
     @Override
     public boolean isShowing(Display display) {
         return CurrentMap.isShowing(pos);
+    }
+
+
+    @Override
+    public void onAdded() {
+        GameMain.logger.low_level_debug("[BlockDrawable]onAdded");
     }
 }

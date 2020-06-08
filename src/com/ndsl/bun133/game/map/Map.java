@@ -1,5 +1,7 @@
 package com.ndsl.bun133.game.map;
 
+import com.ndsl.bun133.display.Display;
+import com.ndsl.bun133.game.GameMain;
 import com.ndsl.bun133.game.map.chunk.Chunk;
 import com.ndsl.bun133.game.map.chunk.block.onMapBlock;
 import com.ndsl.bun133.game.map.gen.IGenerator;
@@ -7,25 +9,38 @@ import com.ndsl.bun133.game.map.graphics.BlockDrawable;
 import com.ndsl.bun133.game.map.pos.ChunkPos;
 import com.ndsl.bun133.game.map.pos.Rect;
 import com.ndsl.bun133.game.map.pos.onMapBlockPos;
+import com.ndsl.bun133.game.map.pos.onMapRect;
+import com.ndsl.bun133.game.register.Blocks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Map {
-    private java.util.Map<ChunkPos, Chunk> ChunkMap=new HashMap<ChunkPos,Chunk>();
+    /**
+     * Map Size for Width and Height.
+     * @See onMapRect
+     */
+    public static final int Map_Size=101;
 
-    public Map(){
-        generator.generateChunk(new ChunkPos(0,0));
+//    private java.util.Map<ChunkPos, Chunk> ChunkMap=new HashMap<ChunkPos,Chunk>();
+
+    private java.util.Map<onMapBlockPos, onMapBlock> BlockMap=new HashMap<>();
+
+    public Display display;
+
+    public Map(Display display){
+        this.display=display;
+//        generator.generateChunk(new ChunkPos(0,0));
+        BlockMap=generator.genMap();
     }
 
     public List<BlockDrawable> getAll(){
         List<BlockDrawable> drawables=new ArrayList<>();
-        for(Chunk chunk:ChunkMap.values()){
-            for(onMapBlock block:chunk.BlockMap.values()){
-                drawables.add(block.getDrawable());
-            }
+        for(onMapBlock block:BlockMap.values()){
+            drawables.add(block.getDrawable());
         }
+        GameMain.logger.debug("[Map]BlockListSize is "+drawables.size());
         return drawables;
     }
 
@@ -37,31 +52,49 @@ public class Map {
     }
 
     public boolean isShowing(onMapBlockPos pos) {
-        return getShowingRect().isContain(pos.getRect());
+        return getShowingRect(display).isContain(pos.getRect());
     }
 
-    public Rect getShowingRect(){
-        return new Rect(-shift_x,-shift_y,-shift_x+1920,-shift_y+1080);
+    public Rect getShowingRect(Display display){
+        return new Rect(-shift_x,-shift_y,-shift_x+display.getWidth(),-shift_y+display.getHeight());
     }
 
-    public Chunk getChunk(ChunkPos pos){
-        if (!ChunkMap.containsKey(pos)) {
-            generator.generateChunk(pos);
-        }
-        return ChunkMap.get(pos);
-    }
+//    @Deprecated
+//    public Chunk getChunk(ChunkPos pos){
+//        if (!ChunkMap.containsKey(pos)) {
+//            generator.generateChunk(pos);
+//        }
+//        return ChunkMap.get(pos);
+//    }
+
+
     public generator generator=new generator();
+
     public class generator{
         private generator(){}
 
         public List<IGenerator> generatorList=new ArrayList<>();
 
-        public Chunk generateChunk(ChunkPos pos){
-            Chunk chunk=new Chunk(pos,Map.this);
-            for(IGenerator generator:generatorList){
-                chunk = generator.gen(chunk);
+//        @Deprecated
+//        public Chunk generateChunk(ChunkPos pos){
+//            Chunk chunk=new Chunk(pos,Map.this);
+//            for(IGenerator generator:generatorList){
+//                chunk = generator.gen(chunk);
+//            }
+//            return chunk;
+//        }
+
+        public java.util.Map<onMapBlockPos,onMapBlock> genMap(){
+            java.util.Map<onMapBlockPos,onMapBlock> block_list = new HashMap<>();
+
+            onMapRect rect=new onMapRect(new onMapBlockPos(1,1,Map.this),new onMapBlockPos(Map.Map_Size,Map.Map_Size,Map.this));
+
+            for(onMapBlockPos pos:rect.getAll(Map.this)){
+                block_list.put(pos,new onMapBlock(Blocks.TEST_BLOCK,pos,Map.this));
             }
-            return chunk;
+
+            GameMain.logger.debug("[MapGenerator]GeneratedMapBlocks Size is "+block_list.size());
+            return block_list;
         }
     }
 }

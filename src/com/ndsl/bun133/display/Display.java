@@ -27,6 +27,9 @@ public class Display extends JFrame {
 
     public void addDrawable(Drawable... drawable){
         drawableList.addAll(Arrays.asList(drawable));
+        for(Drawable d:drawable){
+            d.onAdded();
+        }
     }
 
     @Override

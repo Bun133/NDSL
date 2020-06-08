@@ -133,4 +133,12 @@ public class Drawable {
     public boolean isShowing(Display display){
         return isShow(display);
     }
+
+    /**
+     * Below is Events
+     */
+
+    public void onAdded(){
+        GameMain.logger.debug("[Drawable]onAdded");
+    }
 }

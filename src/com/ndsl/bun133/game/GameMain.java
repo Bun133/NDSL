@@ -18,7 +18,7 @@ public class GameMain {
     public static final boolean Drawable_Debug=true;
 
     public Display display=new Display("Test",100,100,500,500);
-    public Map map=new Map();
+    public Map map=new Map(display);
 
     public GameMain(){
         logger.debug("[GameMain]onStart");
