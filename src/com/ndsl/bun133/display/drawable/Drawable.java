@@ -141,4 +141,19 @@ public class Drawable {
     public void onAdded(){
         GameMain.logger.debug("[Drawable]onAdded");
     }
+
+    public String toString(){
+        switch (this.Drawabletype){
+            case RUNNABLE:
+                return "{Type:Runnable}";
+            case RECT:
+                return "{Type:Rect"+this.rect.toString()+"}";
+            case LINE:
+                return "{Type:Line"+this.line.toString()+"}";
+            case IMAGE:
+                return "{Type:Image"+this.Image_rect.toString()+"}";
+        }
+        return "{Type:Unknown}";
+    }
+
 }

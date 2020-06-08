@@ -26,4 +26,9 @@ public class onDisplayRect {
         points[3]=right_down.toPoint();
         return points;
     }
+
+    @Override
+    public String toString() {
+        return "{Left_up:"+this.left_up.toString()+",Right_down:"+this.right_down.toString()+"}";
+    }
 }

@@ -46,4 +46,8 @@ public class Rect {
         }
         return false;
     }
+
+    public String toString(){
+        return "{Left_up:"+this.left_up.toString()+",Right_down:"+this.right_down.toString()+"}";
+    }
 }

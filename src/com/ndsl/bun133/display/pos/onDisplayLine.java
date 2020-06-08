@@ -7,4 +7,8 @@ public class onDisplayLine {
         this.left_up=left_up;
         this.right_down=right_down;
     }
+
+    public String toString(){
+        return "{Left_up:"+left_up.toString()+",Right_down:"+right_down.toString()+"}";
+    }
 }

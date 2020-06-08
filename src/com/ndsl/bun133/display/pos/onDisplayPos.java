@@ -12,5 +12,9 @@ public class onDisplayPos {
 
     public Point toPoint(){
         return new Point(pos_x,pos_y);
-    };
+    }
+
+    public String toString(){
+        return "{Pos_x:"+this.pos_x+",Pos_y:"+this.pos_y+"}";
+    }
 }

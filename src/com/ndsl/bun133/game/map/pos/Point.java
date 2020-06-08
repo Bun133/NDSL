@@ -13,4 +13,8 @@ public class Point {
         this.y+=shift_y;
         return this;
     }
+
+    public String toString(){
+        return "{Pos_x:"+this.x+",Pos_y:"+this.y+"}";
+    }
 }

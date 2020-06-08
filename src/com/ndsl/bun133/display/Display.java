@@ -45,15 +45,16 @@ public class Display extends JFrame {
                 if(drawable.isShowing(this)) {
                     isRepaint = true;
                     drawable.draw(this);
+                    GameMain.logger.debug("[Display]drawable Update"+drawable.toString());
                 }
             }
         }
-        if(isRepaint) repaint();
+        if(isRepaint)repaint();
     }
 
     @Override
     public void repaint() {
-        GameMain.logger.low_level_debug("[Display]repaint");
+        GameMain.logger.debug("[Display]repaint");
         if (!bfi.contentsLost()) bfi.show();
         Toolkit.getDefaultToolkit().sync();
         getGraphics().dispose();
