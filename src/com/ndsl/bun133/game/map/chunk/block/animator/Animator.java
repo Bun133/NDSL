@@ -1,6 +1,7 @@
 package com.ndsl.bun133.game.map.chunk.block.animator;
 
 import com.ndsl.bun133.display.Display;
+import com.ndsl.bun133.game.GameMain;
 import com.ndsl.bun133.game.map.chunk.block.status.BlockStatus;
 import com.ndsl.bun133.game.map.pos.Point;
 
@@ -29,6 +30,7 @@ public class Animator {
 
     public void drawImage(Display display,Image image,Point point){
         display.getGraphics().drawImage(image,point.x,point.y,null);
+        GameMain.logger.debug("[Animator]onDraw:{Image Point:"+point.toString()+"}");
     }
 
     public Image getImage(long passed_time) {

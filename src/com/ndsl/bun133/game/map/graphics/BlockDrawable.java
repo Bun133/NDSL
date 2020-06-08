@@ -38,7 +38,7 @@ public class BlockDrawable extends Drawable {
 
     @Override
     public boolean isShowing(Display display) {
-        return CurrentMap.isShowing(pos);
+        return CurrentMap.isShowing(pos,display);
     }
 
     @Override

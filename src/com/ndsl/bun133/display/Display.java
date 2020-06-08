@@ -1,6 +1,7 @@
 package com.ndsl.bun133.display;
 
 import com.ndsl.bun133.display.drawable.Drawable;
+import com.ndsl.bun133.display.pos.onDisplayRect;
 import com.ndsl.bun133.game.GameMain;
 
 import javax.swing.*;
@@ -64,6 +65,11 @@ public class Display extends JFrame {
     @Override
     public Graphics getGraphics() {
         return bfi.getDrawGraphics();
+    }
+
+    @Deprecated
+    public void drawRect(onDisplayRect rect){
+        getGraphics().drawRect(rect.left_up.pos_x, rect.right_down.pos_y,rect.getWidth(),rect.getHeight());
     }
 
 //    public boolean isPreparing(){

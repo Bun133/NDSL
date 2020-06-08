@@ -1,5 +1,7 @@
 package com.ndsl.bun133.logger;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.PrintStream;
 
 public class Logger {
@@ -53,7 +55,8 @@ public class Logger {
         OutStream=CustomStream;
     }
 
-    public void println(String text){
+    public void println(@NotNull String text){
+        if(text.isEmpty()) return;
         OutStream.println(text);
     }
 

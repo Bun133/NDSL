@@ -1,18 +1,16 @@
 package com.ndsl.bun133.game.map.chunk;
 
 import com.ndsl.bun133.game.GameMain;
-import com.ndsl.bun133.game.map.chunk.block.Block;
 import com.ndsl.bun133.game.map.chunk.block.onMapBlock;
 import com.ndsl.bun133.game.map.pos.ChunkPos;
 import com.ndsl.bun133.game.map.pos.onMapBlockPos;
 import com.ndsl.bun133.game.map.pos.onMapRect;
 import com.ndsl.bun133.game.register.Blocks;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Deprecated
 public class Chunk {
     public Map<onMapBlockPos, onMapBlock> BlockMap=new HashMap<>();
 

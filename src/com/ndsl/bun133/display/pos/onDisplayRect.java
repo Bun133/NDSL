@@ -2,6 +2,8 @@ package com.ndsl.bun133.display.pos;
 
 import com.ndsl.bun133.game.map.pos.Point;
 
+import java.awt.*;
+
 public class onDisplayRect {
     public onDisplayPos left_up;
     public onDisplayPos right_down;
@@ -30,5 +32,14 @@ public class onDisplayRect {
     @Override
     public String toString() {
         return "{Left_up:"+this.left_up.toString()+",Right_down:"+this.right_down.toString()+"}";
+    }
+
+
+    public boolean isContain(Point point){
+        return left_up.pos_x >= point.x && left_up.pos_y >= point.y && point.x >= right_down.pos_x && point.y >= right_down.pos_y;
+    }
+
+    public Rectangle toRectangle(){
+        return new Rectangle(left_up.pos_x,right_down.pos_y,getWidth(),getHeight());
     }
 }

@@ -6,6 +6,7 @@ import com.ndsl.bun133.display.pos.onDisplayRect;
 import com.ndsl.bun133.game.GameMain;
 import com.ndsl.bun133.game.map.pos.Point;
 import com.ndsl.bun133.game.map.pos.Rect;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -100,6 +101,15 @@ public class Drawable {
                 runnable.run();
                 break;
         }
+
+        if(GameMain.Drawable_Debug) debug(display);
+    }
+
+    private void debug(@NotNull Display display) {
+        onDisplayRect rect=getRect();
+        Graphics graphics=display.getGraphics();
+        graphics.setColor(GameMain.Debug_Color);
+        graphics.drawRect(rect.left_up.pos_x,rect.right_down.pos_y,rect.getWidth(), rect.getHeight());
     }
 
     public onDisplayRect getRect(){
@@ -126,7 +136,7 @@ public class Drawable {
         return isNeedDraw;
     }
 
-    private boolean isShow(Display display){
+    private boolean isShow(@NotNull Display display){
         return new Rect(0,0,display.getWidth(),display.getHeight()).isContain(getRect());
     }
 
