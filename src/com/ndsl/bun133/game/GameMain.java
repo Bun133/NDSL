@@ -6,6 +6,7 @@ import com.ndsl.bun133.display.key.KeyInput;
 import com.ndsl.bun133.game.map.Map;
 import com.ndsl.bun133.game.map.pos.Point;
 import com.ndsl.bun133.game.register.Blocks;
+import com.ndsl.bun133.game.util.TickRegister;
 import com.ndsl.bun133.logger.Logger;
 
 import java.awt.*;
@@ -21,10 +22,15 @@ public class GameMain {
     public static final boolean Drawable_Debug=true;
     public static final Color Debug_Color=new Color(255,0, 215);
 
+
+    public TickRegister tickRegister=new TickRegister();
+
+
     public Display display=new Display("Test",100,100,500,500);
-    public Map map=new Map(display);
 
     public KeyInput keyInput=new KeyInput(display);
+    public Map map=new Map(display,keyInput,tickRegister);
+
 
     public GameMain(){
         logger.debug("[GameMain]onStart");
@@ -34,5 +40,6 @@ public class GameMain {
     }
 
     public void run(){
+        tickRegister.onTick();
     }
 }

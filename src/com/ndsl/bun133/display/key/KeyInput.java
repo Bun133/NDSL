@@ -23,7 +23,7 @@ public class KeyInput implements java.awt.event.KeyListener {
     }
 
     private void onKey(int keyCode, char keyChar,boolean isPushed) {
-        GameMain.logger.low_level_debug(isPushed ? "[KeyInput]Key: "+keyChar+" isPushing" : "[KeyInput]Key: "+keyChar+" is Not Pushing");
+        GameMain.logger.debug(isPushed ? "[KeyInput]Key: "+keyChar+"("+keyCode+")"+" isPushing" : "[KeyInput]Key: "+keyChar+"("+keyCode+")"+" is Not Pushing");
     }
 
     @Override
@@ -39,7 +39,13 @@ public class KeyInput implements java.awt.event.KeyListener {
     }
 
     public boolean getKey(int keycode){
-        return KeyBool.getOrDefault(keycode,false);
+        for(Map.Entry<MultiSet<Integer, Character>, Boolean> entry:KeyBool.entrySet()){
+            if(entry.getKey().t_value==keycode){
+                return entry.getValue();
+            }
+        }
+        GameMain.logger.low_level_debug("[KeyInput]NotFoundKey:"+keycode);
+        return false;
     }
 
 //    public Set<MultiSet<Integer,Character>> getAll(){
@@ -58,5 +64,20 @@ public class KeyInput implements java.awt.event.KeyListener {
             }
         }
         return list;
+    }
+
+
+    /**
+     * below is register
+     */
+
+    public List<IKeyListener> keyListeners=new ArrayList<>();
+
+    public void addKeyListener(IKeyListener listener){
+        keyListeners.add(listener);
+    }
+
+    public void onKey_Register(char key_char,int key_code,boolean isPushing){
+
     }
 }

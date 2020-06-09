@@ -1,6 +1,7 @@
 package com.ndsl.bun133.game.map;
 
 import com.ndsl.bun133.display.Display;
+import com.ndsl.bun133.display.key.KeyInput;
 import com.ndsl.bun133.game.GameMain;
 import com.ndsl.bun133.game.map.chunk.block.onMapBlock;
 import com.ndsl.bun133.game.map.gen.IGenerator;
@@ -9,13 +10,16 @@ import com.ndsl.bun133.game.map.pos.Rect;
 import com.ndsl.bun133.game.map.pos.onMapBlockPos;
 import com.ndsl.bun133.game.map.pos.onMapRect;
 import com.ndsl.bun133.game.register.Blocks;
+import com.ndsl.bun133.game.util.ITickEvent;
+import com.ndsl.bun133.game.util.TickRegister;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Map {
+public class Map implements ITickEvent {
     /**
      * Map Size for Width and Height.
      * @See onMapRect
@@ -28,10 +32,14 @@ public class Map {
 
     public Display display;
 
-    public Map(Display display){
+    public KeyInput keyInput;
+
+    public Map(Display display, KeyInput keyInput, TickRegister tickRegister){
         this.display=display;
 //        generator.generateChunk(new ChunkPos(0,0));
         BlockMap=generator.genMap();
+        this.keyInput=keyInput;
+        tickRegister.add(this);
     }
 
     public List<BlockDrawable> getAll(){
@@ -54,7 +62,7 @@ public class Map {
         return getShowingRect(display).isContain(pos.getRect());
     }
 
-    public Rect getShowingRect(@NotNull Display display){
+    public Rect getShowingRect(Display display){
         Rect rect=new Rect(-shift_x,-shift_y,-shift_x+display.getWidth(),-shift_y+display.getHeight());
         GameMain.logger.low_level_debug("[Map]ShowingRect:"+rect.toString());
         return rect;
@@ -70,6 +78,27 @@ public class Map {
 
 
     public generator generator=new generator();
+
+    @Override
+    public void onTick() {
+        GameMain.logger.low_level_debug("[Map]onTick");
+        if (keyInput.getKey(KeyEvent.VK_UP)){
+            GameMain.logger.debug("[Map]KeyInput:UP");
+            shift_y--;
+        }
+        if (keyInput.getKey(KeyEvent.VK_DOWN)){
+            GameMain.logger.debug("[Map]KeyInput:DOWN");
+            shift_y++;
+        }
+        if (keyInput.getKey(KeyEvent.VK_LEFT)){
+            GameMain.logger.debug("[Map]KeyInput:LEFT");
+            shift_x--;
+        }
+        if (keyInput.getKey(KeyEvent.VK_RIGHT)){
+            GameMain.logger.debug("[Map]KeyInput:RIGHT");
+            shift_x++;
+        }
+    }
 
     public class generator{
         private generator(){}
